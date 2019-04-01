@@ -1,4 +1,8 @@
 # helloSpringCloud
+全局项目设置免密提交git库
+git config --global credential.helper store
+单个项目设置
+git config credential.helper store
 项目
 <groupId>com.xjch.test.springcloud</groupId>
 <artifactId>helloSpringCloud</artifactId>
