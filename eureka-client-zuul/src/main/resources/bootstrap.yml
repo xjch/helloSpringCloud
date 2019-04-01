@@ -1,0 +1,25 @@
+server:
+  port: 8750
+spring:
+  application:
+    name: zuul-client
+# 路由规则配置
+zuul:
+  ignored-patterns: /**/hi/**
+  prefix: /myapi #统一为路由规则增加前缀
+  add-host-header: true #API网关在进行请求路由转发前为请求设置Host头信息
+  #retryable: false #关闭全局重试机制
+  routes:
+    local: #访问/local时能够自动跳转到本地
+      path: /local/**
+      url: forward:/local
+    service-provider1: /service-provider1/** #两种配置方式
+    service-provider2:
+      sensitiveHeaders: X-ABC #敏感的头信息经过API网关进行传递，如果客户端在发请求是带了X-ABC，那么X-ABC不会传递给下游服务
+      path: /service-provider2/**
+      serviceId: service-provider2
+      retryable: false #关闭某一个服务的重试机制
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

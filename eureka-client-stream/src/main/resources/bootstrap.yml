@@ -1,0 +1,40 @@
+server:
+  port: 8769
+spring:
+  application:
+    name: stream-client
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: trade
+          contentType: 'application/json'
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: xjchtest
+    password: xjchtest
+    virtual-host: /
+    #生产端
+    publisher-confirms: true
+    publisher-returns: true
+    template:
+      mandatory: true
+    #exchange.name=mq.direct
+    #消费端
+    listener:
+      simple:
+        acknowledge-mode: manual
+        #初始连接数量
+        concurrency: 5
+        #最大连接数量
+        max-concurrency: 10
+        #限流
+        prefetch: 1
+      direct:
+        acknowledge-mode: manual
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

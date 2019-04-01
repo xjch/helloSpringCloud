@@ -1,0 +1,37 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+server:
+  port: 8770
+spring:
+  application:
+    name: service-feign-retry-client
+
+feign:
+  hystrix:
+    enabled: true
+
+service-provider1:
+  ribbon:
+    #配置首台服务器重试1次
+    MaxAutoRetries: 1
+    #配置其他服务器重试两次
+    MaxAutoRetriesNextServer: 2
+    #链接超时时间
+    ConnectTimeout: 500
+    #请求处理时间
+    ReadTimeout: 2000
+    #每个操作都开启重试机制
+    OkToRetryOnAllOperations: true
+
+#设置请求处理时间 readtimeout 为 2000，另外设置hystrix的超时时间要大于2倍的readtimeout时间。
+#配置断路器超时时间，默认是1000（1秒）
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000

@@ -1,0 +1,35 @@
+server:
+  port: 8886
+spring:
+  application:
+    name: config-server-jks
+  cloud:
+    config:
+      server:
+        git:
+          #配置git仓库地址
+          uri: https://github.com/xjch/springcloudconfigserver.git
+          username: xjch
+          password:  '{cipher}AQAHp85CqeW2WNvg6h9RMV7cziYom973vjcpTaa939LyrIT3GtId72XBWSyRq9dG2a4AtvmTsT4hDhrDz8chJdZKVD9Gq4VCm7Os38k2gQUltd03qbMK9AtViUa0uO+u8yYrCDMm+5p2aAktRu5oMpKbDPUCP/Ftqup5DMz37HMcPRkBnPe+JEhTNbOZScFyC+ELTcrlTpcAv3B/nubMad67KylnzkiloAaEcmMZ7knGaVYB4pG4secczidT3kECWxfaVk0tGwgI1MAdvREyhoqX/sK99nK0qpSEP44AGlu7I/FuBfk+BMqgbmF6iIrZQGa2jR2JYrBzSuJZTZ08cRC3/IIqhTMpcnLFqpAKJsEEv0tlZ31nm0jf4BagMmZIwZY='
+          searchPaths: '{profile}'
+      #配置仓库的分支
+      #label: master
+encrypt:
+  #key: test
+  keyStore:
+    location: classpath:/server.jks   # server.jks的配置文件的路径
+    password: cloudstudy      # 设置store的密码
+    alias: xjchtestkey
+    secret: xjchgithub      # keypass密码
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
+#  security:
+#      enabled: false
